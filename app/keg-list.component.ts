@@ -1,5 +1,6 @@
-import {Component} from 'angular2/core';
+import {Component, EventEmitter} from 'angular2/core';
 import {Keg} from './keg.model';
+import {KegComponent} from './keg.component';
 
 @Component({
   selector: 'keg-list',
@@ -15,4 +16,13 @@ import {Keg} from './keg.model';
 export class KegListComponent{
   public kegList: Keg[];
   public onKegSelect: EventEmitter<Keg>;
+  public selectedKeg: Keg;
+  constructor(){
+    this.onKegSelect = new EventEmitter();
+  }
+  kegClicked(clickedKeg: Keg): void {
+    console.log('child', clickedKeg);
+    this.selectedKeg = clickedKeg;
+    this.onKegSelect.emit(clickedKeg);
+  }
 }

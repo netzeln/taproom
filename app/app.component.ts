@@ -1,13 +1,16 @@
-import { Component} from 'angular2/core';
+import { Component, EventEmitter} from 'angular2/core';
+import { KegListComponent} from './keg-list.component'
 import {Keg} from './keg.model';
 
 
 @Component({
   selector: 'my-app',
-  // directives: ,
+  directives: [KegListComponent],
   template: `
-  <h1>Tap Room!</h1>
-  <h3 *ngFor="#keg of kegs">{{ keg.name }}{{ keg.brand }}</h3>
+  <div class="container">
+  <h1>Tap Room</h1>
+  <keg-list [kegList]="kegs" (onKegSelect)="kegWasSelected($event)"></keg-list>
+  </div>
   `
 })
 
@@ -20,5 +23,8 @@ export class AppComponent {
       new Keg("Hefeweizen", "Widmer", 3.5, 5.0, 2),
       new Keg("Session Black", "Full Sail", 3, 5.0, 3)
     ];
+  }
+  kegWasSelected(clickedKeg: Keg): void {
+    console.log('parent', clickedKeg);
   }
 }
